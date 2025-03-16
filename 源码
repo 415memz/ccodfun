@@ -1,0 +1,204 @@
+.版本 2
+.支持库 console
+.支持库 eAPI
+.支持库 spec
+.支持库 internet
+
+.程序集 程序集1
+.程序集变量 bef, 文本型
+.程序集变量 Vs, 文本型, , "3,2"
+.程序集变量 Vmap, 逻辑型, , "3"
+.程序集变量 cmdtool, 控制台对象
+.程序集变量 login, 文本型
+.程序集变量 pswd, 文本型
+
+.子程序 _启动子程序, 整数型, , 本子程序在程序启动后最先执行
+
+标准输出 (, “CCodefun Code Version1.0” ＋ #换行符)
+标准输出 (, “Gamma” ＋ #换行符)
+main ()
+返回 (0)  ' 可以根据您的需要返回任意数值
+
+.子程序 main
+.局部变量 memory, 整数型
+
+标准输出 (, “Login:”)
+login ＝ 标准输入 ()
+标准输出 (, #换行符 ＋ “Password:”)
+pswd ＝ 标准输入 (假)
+Vs [1] ＝ “”
+Vs [2] ＝ “”
+Vs [2] ＝ “”
+Vmap ＝ { 假, 假, 假 }
+memory ＝ 取内存容量信息 (1)
+标准输出 (, #换行符 ＋ 到文本 (memory) ＋ “M”)
+imprtnt ()
+
+.子程序 imprtnt
+.局部变量 command, 文本型
+.局部变量 xcom, 文本型
+.局部变量 tempV, 文本型, , "2"
+.局部变量 tempI, 整数型, , "2"
+.局部变量 calc1, 文本型, , "2"
+.局部变量 files, 文本型, , "2"
+
+标准输出 (, #换行符 ＋ bef ＋ “]”)
+command ＝ 标准输入 ()
+xcom ＝ 到小写 (command)
+.判断开始 (取文本左边 (xcom, 5) ＝ “print”)
+    .判断开始 (取文本右边 (取文本左边 (command, 9), 3) ＝ “pvs”)
+        标准输出 (, 判断变量 (取文本右边 (command, 取文本长度 (command) － 10)))
+    .默认
+        标准输出 (, #换行符 ＋ 取文本右边 (xcom, 取文本长度 (xcom) － 6))
+    .判断结束
+    ' 此处为空
+.判断 (取文本左边 (xcom, 4) ＝ “setv”)
+    .判断开始 (Vmap [1] ＝ 假)
+        tempV ＝ 分割文本 (取文本右边 (command, 取文本长度 (command) － 5), “=”, 2)
+        Vs [1] [1] ＝ tempV [1]
+        Vs [1] [2] ＝ tempV [2]
+        调试输出 (Vs)
+        调试输出 (Vmap)
+        Vmap [1] ＝ 真
+    .判断 (Vmap [2] ＝ 假)
+        tempV ＝ 分割文本 (取文本右边 (command, 取文本长度 (command) － 5), “=”, 2)
+        Vs [2] [1] ＝ tempV [1]
+        Vs [2] [2] ＝ tempV [2]
+        调试输出 (Vs)
+        调试输出 (Vmap)
+        Vmap [2] ＝ 真
+    .判断 (Vmap [3] ＝ 假)
+        tempV ＝ 分割文本 (取文本右边 (command, 取文本长度 (command) － 5), “=”, 2)
+        Vs [3] [1] ＝ tempV [1]
+        Vs [3] [2] ＝ tempV [2]
+        调试输出 (Vs)
+        调试输出 (Vmap)
+        Vmap [3] ＝ 真
+    .默认
+        error (“No enough variables   ”, “002”)
+    .判断结束
+
+    标准输出 (, #换行符 ＋ tempV [1] ＋ “ = ” ＋ tempV [2])
+.判断 (取文本左边 (xcom, 4) ＝ “calc”)  ' calc + %q% 1
+    calc1 ＝ 分割文本 (取文本右边 (xcom, 取文本长度 (xcom) － 7), “ ”, )
+    调试输出 (判断变量 (取文本左边 (取文本右边 (calc1 [1], 取文本长度 (calc1 [1]) － 1), 取文本长度 (calc1 [1]) － 2)))
+    .判断开始 (取文本左边 (calc1 [1], 1) ＝ “%”)
+        .判断开始 (判断变量 (取文本左边 (取文本右边 (calc1 [1], 取文本长度 (calc1 [1]) － 1), 取文本长度 (calc1 [1]) － 2)) ≠ “no$$”)
+            调试输出 (判断变量 (取文本左边 (取文本右边 (calc1 [1], 取文本长度 (calc1 [1]) － 1), 取文本长度 (calc1 [1]) － 2)))
+            calc1 [1] ＝ 判断变量 (取文本左边 (取文本右边 (calc1 [1], 取文本长度 (calc1 [1]) － 1), 取文本长度 (calc1 [1]) － 2))
+        .默认
+            error (“No variables”, “003”)
+            imprtnt ()
+        .判断结束
+        ' 此处为空
+    .默认
+        ' 此处为空
+    .判断结束
+    .判断开始 (取文本中间 (xcom, 6, 1) ＝ “+”)  ' calc + 1 1
+        标准输出 (, 到整数 (calc1 [1]) ＋ 到整数 (calc1 [2]))
+    .判断 (取文本中间 (xcom, 6, 1) ＝ “-”)
+        标准输出 (, 到整数 (calc1 [1]) － 到整数 (calc1 [2]))
+    .判断 (取文本中间 (xcom, 6, 1) ＝ “*”)
+        标准输出 (, 到整数 (calc1 [1]) × 到整数 (calc1 [2]))
+    .判断 (取文本中间 (xcom, 6, 1) ＝ “/”)
+        标准输出 (, 到整数 (calc1 [1]) ÷ 到整数 (calc1 [2]))
+    .默认
+        error (“No calculation”, “004”)
+    .判断结束
+    ' 此处为空
+.判断 (xcom ＝ “clean”)
+    cmdtool.清屏 ()
+.判断 (取文本左边 (xcom, 4) ＝ “read”)
+    标准输出 (, 到文本 (读入文件 (取文本右边 (command, 取文本长度 (command) － 5))))
+.判断 (取文本左边 (xcom, 4) ＝ “time”)
+    标准输出 (, 到文本 (取月份 (取现行时间 ())) ＋ “/” ＋ 到文本 (取日 (取现行时间 ())) ＋ “/” ＋ 到文本 (取年份 (取现行时间 ())) ＋ #换行符)
+.判断 (取文本左边 (xcom, 5) ＝ “write”)
+    files ＝ 分割文本 (取文本右边 (command, 取文本长度 (command) － 6), “ ”, )
+    写到文件 (files [1], 到字节集 (files [2]))
+    标准输出 (, 读入文件 (files [1]))
+    标准输出 (, “DONE.”)
+.判断 (取文本左边 (xcom, 6) ＝ “delete”)
+    .判断开始 (删除文件 (取文本右边 (command, 取文本长度 (command) － 7)) ＝ 真)
+        标准输出 (, “DONE.”)
+    .默认
+        标准输出 (, “Command execution failed.”)
+    .判断结束
+    标准输出 (, “DELETE EXECUTED”)
+.判断 (取文本左边 (xcom, 6) ＝ “makeds”)
+    创建目录 (取文本右边 (command, 取文本长度 (command) － 7))
+.判断 (取文本左边 (xcom, 6) ＝ “system”)
+    运行 (取文本右边 (command, 取文本长度 (command) － 7), 真, )
+.判断 (取文本左边 (xcom, 7) ＝ “taskmgr”)
+    运行 (“tasklist”, 真, )
+    taskmgr ()
+.判断 (bef ＝ “TASKMGR”)
+    .判断开始 (取文本左边 (xcom, 8) ＝ “taskkill”)
+        运行 (“taskkill /im ” ＋ 取文本右边 (command, 取文本长度 (command) － 9) ＋ “ /f”, 真, )
+    .判断 (取文本左边 (xcom, 3) ＝ “run”)
+        运行 (取文本右边 (command, 取文本长度 (command) － 4), 真, )
+    .判断 (取文本左边 (xcom, 4) ＝ “qxit”)
+        bef ＝ “”
+        imprtnt ()
+    .默认
+        no ()
+    .判断结束
+    ' 此处为空
+.判断 (取文本左边 (xcom, 6) ＝ “updata”)
+    调试输出 (HTTP读文件 (“https://415memz.github.io/ccodfun/updata.upd”))
+    .判断开始 (HTTP读文件 (“https://415memz.github.io/ccodfun/updata.upd”) ＝ { 49, 65, 76, 80, 72, 65, 10 })
+        标准输出 (, “It's the newist version.”)
+    .判断 (到文本 (HTTP读文件 (“https://415memz.github.io/ccodfun/updata.upd”)) ≠ “1ALPHA” ＋ #换行符)
+        标准输出 (, “There is a newer version.”)
+        updata ()
+    .默认
+        error (“There is not useful web.”, “005”)
+    .判断结束
+    ' 此处为空
+.判断 (xcom ＝ “user”)
+    标准输出 (, login ＋ #换行符 ＋ 取文本左边 (pswd, 2))
+.判断 (xcom ＝ “vlist”)
+    标准输出 (, Vs [1] [1] ＋ “:” ＋ Vs [1] [2] ＋ #换行符)
+    标准输出 (, Vs [2] [1] ＋ “:” ＋ Vs [2] [2] ＋ #换行符)
+    标准输出 (, Vs [3] [1] ＋ “:” ＋ Vs [3] [2])
+.判断 (xcom ＝ “relogin”)
+    标准输出 (, “RELOGIN”)
+    main ()
+.判断 (command ＝ “ ”)
+    imprtnt ()
+.判断 (command ＝ #换行符)
+    imprtnt ()
+.默认
+    no ()
+.判断结束
+imprtnt ()
+
+.子程序 判断变量, 文本型
+.参数 参数文本, 文本型
+
+.判断开始 (参数文本 ＝ Vs [1] [1])
+    返回 (Vs [1] [2])
+.判断 (参数文本 ＝ Vs [2] [1])
+    返回 (Vs [2] [2])
+.判断 (参数文本 ＝ Vs [3] [1])
+    返回 (Vs [3] [2])
+.默认
+    返回 (“no$$”)
+.判断结束
+
+
+.子程序 error
+.参数 reason, 文本型
+.参数 Number, 文本型
+
+标准输出 (, #换行符 ＋ “__________________________________________”)
+标准输出 (, #换行符 ＋ “Error:” ＋ reason ＋ “0x00000” ＋ Number)
+标准输出 (, #换行符 ＋ “__________________________________________”)
+
+.子程序 no
+
+标准输出 (, #换行符 ＋ “It isn't recognized as a ccodf-code.”)
+
+.子程序 taskmgr
+
+bef ＝ “TASKMGR”
+imprtnt ()
